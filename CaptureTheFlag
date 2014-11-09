@@ -1,0 +1,73 @@
+package CTF;
+
+import zen.core.Zen;
+
+public class CaptureTheFlag {
+
+	public static void main(String[] args) {
+		Zen.connect("capture the flag");
+		Zen.write("anoopx", 750);
+		Zen.write("anoopy", 250);
+		Zen.write("anoopteam", "blue");
+		Zen.create(1000,500);
+		Player me = new Player("anoop");
+		Game g = new Game();
+		
+		Team redTeam = new Team("red");
+		
+		redTeam.addPlayer(new Player("keshav"));
+		redTeam.addPlayer(new Player("divya"));
+		redTeam.addPlayer(new Player("ruchi"));
+		redTeam.addPlayer(new Player("alejandro"));
+		redTeam.addPlayer(new Player("nathan"));
+		redTeam.addPlayer(new Player("aakash"));
+		g.addTeam(redTeam);
+		Team blueTeam = new Team("blue");
+		blueTeam.addPlayer(new Player ("nicholas"));
+		blueTeam.addPlayer(me);
+		blueTeam.addPlayer(new Player ("amogh"));
+		blueTeam.addPlayer(new Player("rishi"));
+		blueTeam.addPlayer(new Player ("rohan"));
+		g.addTeam(blueTeam);
+		while(true){
+			drawBackground();
+			if(Zen.isKeyPressed("left")&& getX() > 10){
+				Zen.write("anoopx", getX() - 10);
+			}
+			if(Zen.isKeyPressed("right") && getX() < 990){
+				Zen.write("anoopx", getX() + 10);
+			}
+			if(Zen.isKeyPressed("down") && getY() < 990){
+				Zen.write("anoopy", getY() + 10 );
+			}
+			if(Zen.isKeyPressed("up") && getY() > 10){
+				Zen.write("anoopy", getY() - 10);
+			}
+			if(getX() > 500 && blueTeam.isTouching(me)){
+				Zen.write("anoopx", 750);
+				Zen.write("anoopy", 250);
+			}
+			g.draw();
+			g.move();
+			
+			Zen.buffer(30);
+		}
+
+	}
+
+	private static int getY() {
+		return(Zen.readInt("anoopx"));
+	}
+
+	private static int getX() {
+		return Zen.readInt("keshavx");
+	}
+
+	private static void drawBackground() {
+		Zen.setBackground("green");
+		Zen.setColor("navajo white");
+		Zen.drawLine(500, 0, 500, 500);
+		
+	}
+	
+}
